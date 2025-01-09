@@ -14,13 +14,9 @@ export class UserService extends BaseService<User> {
     super(repository);
   }
 
-  async findOneByUsernameAndPassword(
-    username: string,
-    password: string,
-  ): Promise<User> {
+  async findOneByUsername(username: string): Promise<User> {
     return this.repository.findOneBy({
       username,
-      password,
     });
   }
 }

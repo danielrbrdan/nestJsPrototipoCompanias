@@ -42,7 +42,10 @@ describe('AuthController (e2e)', () => {
 
   describe('/auth/login (POST)', () => {
     it('should return a token for valid user', async () => {
-      await dataSource.getRepository(User).save(mockUser);
+      await request(app.getHttpServer())
+        .post('/auth/singup')
+        .send(mockUser)
+        .expect(HttpStatus.CREATED);
 
       return request(app.getHttpServer())
         .post('/auth/login')
@@ -80,7 +83,11 @@ describe('AuthController (e2e)', () => {
       .getRepository(User)
       .findOneBy({ id: response.body.id });
 
-    expect(created).toEqual({ ...mockUser, id: expect.any(Number) });
+    expect(created).toEqual({
+      ...mockUser,
+      id: expect.any(Number),
+      password: expect.any(String),
+    });
   });
 
   afterAll(async () => {

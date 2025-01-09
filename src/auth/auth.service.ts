@@ -4,6 +4,7 @@ import { IUser } from 'src/user/interfaces/user.interface';
 import { UserService } from 'src/user/user.service';
 import { IAuth } from './interface/auth.interface';
 import { JWT_SECRET } from 'src/config/enviroment';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class AuthService {
@@ -13,12 +14,18 @@ export class AuthService {
   ) {}
 
   async authenticate(user: IUser): Promise<IAuth> {
-    const userFound = await this.userService.findOneByUsernameAndPassword(
-      user.username,
-      user.password,
-    );
+    const userFound = await this.userService.findOneByUsername(user.username);
 
     if (!userFound) {
+      throw new BadRequestException('User invalid!');
+    }
+
+    const isPasswordValid = await bcrypt.compare(
+      user.password,
+      userFound.password,
+    );
+
+    if (!isPasswordValid) {
       throw new BadRequestException('User invalid!');
     }
 
@@ -37,7 +44,11 @@ export class AuthService {
     };
   }
 
-  singup(input: IUser): Promise<IUser> {
+  async singup(input: IUser): Promise<IUser> {
+    const hashedPassword = await bcrypt.hash(input.password, 10);
+
+    input.password = hashedPassword;
+
     return this.userService.create(input);
   }
 }

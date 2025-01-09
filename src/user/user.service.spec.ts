@@ -38,16 +38,12 @@ describe('UserService', () => {
     expect(userService).toBeDefined();
   });
 
-  describe('findOneByUsernameAndPassword', () => {
-    it('should return a user when valid username and password are provided', async () => {
-      const result = await userService.findOneByUsernameAndPassword(
-        'test',
-        'test',
-      );
+  describe('findOneByUsername', () => {
+    it('should return a user when valid username is provided', async () => {
+      const result = await userService.findOneByUsername('test');
       expect(result).toEqual(mockUser);
       expect(mockUserRepository.findOneBy).toHaveBeenCalledWith({
         username: 'test',
-        password: 'test',
       });
     });
 
@@ -55,10 +51,7 @@ describe('UserService', () => {
       mockUserRepository.findOneBy.mockResolvedValue(null);
 
       try {
-        await userService.findOneByUsernameAndPassword(
-          'test',
-          'wrong-password',
-        );
+        await userService.findOneByUsername('test');
       } catch (e) {
         expect(e).toBeInstanceOf(BadRequestException);
         expect(e.message).toBe('User not found!');

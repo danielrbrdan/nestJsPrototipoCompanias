@@ -6,6 +6,9 @@ import { BadRequestException } from '@nestjs/common';
 import { mockUser } from 'src/user/mock/user.mock';
 import { mockAuth } from './mock/auth.mock';
 import { JWT_SECRET } from 'src/config/enviroment';
+import * as bcrypt from 'bcryptjs';
+
+jest.mock('bcryptjs');
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -14,7 +17,7 @@ describe('AuthService', () => {
 
   beforeEach(async () => {
     userService = {
-      findOneByUsernameAndPassword: jest.fn(),
+      findOneByUsername: jest.fn(),
       create: jest.fn(),
     } as unknown as jest.Mocked<UserService>;
 
@@ -35,13 +38,18 @@ describe('AuthService', () => {
 
   describe('authenticate', () => {
     it('should return a token when user is valid', async () => {
-      userService.findOneByUsernameAndPassword.mockResolvedValue(mockUser);
+      bcrypt.compare = jest.fn().mockResolvedValue(true);
+
+      userService.findOneByUsername.mockResolvedValue(mockUser);
 
       const result = await service.authenticate(mockUser);
 
       expect(result).toEqual(mockAuth);
-      expect(userService.findOneByUsernameAndPassword).toHaveBeenCalledWith(
+      expect(userService.findOneByUsername).toHaveBeenCalledWith(
         mockUser.username,
+      );
+      expect(bcrypt.compare).toHaveBeenCalledWith(
+        mockUser.password,
         mockUser.password,
       );
       expect(jwtService.signAsync).toHaveBeenCalledWith(
@@ -51,7 +59,17 @@ describe('AuthService', () => {
     });
 
     it('should throw BadRequestException if user is not found', async () => {
-      userService.findOneByUsernameAndPassword.mockResolvedValue(null);
+      userService.findOneByUsername.mockResolvedValue(null);
+
+      await expect(service.authenticate(mockUser)).rejects.toThrow(
+        BadRequestException,
+      );
+    });
+
+    it('should throw BadRequestException if password is invalid', async () => {
+      bcrypt.compare = jest.fn().mockResolvedValue(false);
+
+      userService.findOneByUsername.mockResolvedValue(mockUser);
 
       await expect(service.authenticate(mockUser)).rejects.toThrow(
         BadRequestException,
@@ -61,12 +79,18 @@ describe('AuthService', () => {
 
   describe('singup', () => {
     it('should create a new user', async () => {
+      bcrypt.hash = jest.fn().mockResolvedValue('hashedPassword');
+
       userService.create.mockResolvedValue(mockUser);
 
-      const result = await service.singup(mockUser);
+      const result = await service.singup({ ...mockUser });
 
       expect(result).toEqual(mockUser);
-      expect(userService.create).toHaveBeenCalledWith(mockUser);
+      expect(userService.create).toHaveBeenCalledWith({
+        ...mockUser,
+        password: 'hashedPassword',
+      });
+      expect(bcrypt.hash).toHaveBeenCalledWith(mockUser.password, 10);
     });
   });
 });
