@@ -11,6 +11,7 @@ Este é um backend desenvolvido em NestJS, utilizando TypeORM para manipulação
 - POST /auth/login: Gerar token para acesso ao sistema.
 - POST /auth/singup: Cadastrar novo usuario no sistema.
 - GET /companies: Lista todas as empresas.
+- GET /companies/:id: Pegar dados de uma empresa especifica.
 - POST /companies: Cadastra uma nova empresa.
 - PUT /companies/:id: Atualiza uma empresa existente.
 - DELETE /companies/:id: Exclui uma empresa.
