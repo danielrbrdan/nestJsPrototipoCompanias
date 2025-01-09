@@ -1,6 +1,6 @@
   <p align="center">Sistema de cadastro de Companias</p>
 
-## Description
+## Descrição
 
 Este é um backend desenvolvido em NestJS, utilizando TypeORM para manipulação de dados no banco de dados MySQL (ou MariaDB). O sistema fornece uma API RESTful para gerenciar empresas, com operações de criação, leitura, atualização e exclusão (CRUD).
 
