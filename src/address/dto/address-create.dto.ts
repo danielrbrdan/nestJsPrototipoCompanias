@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, Matches } from 'class-validator';
+import { IsString, IsNotEmpty, Matches, IsNumber, IsNumberString } from 'class-validator';
 import { cepRegex } from 'src/utils/variables/common-variables';
 
 export class AddressCreateDto {
@@ -7,7 +7,7 @@ export class AddressCreateDto {
   street: string;
 
   @IsNotEmpty({ message: 'O número é obrigatório.' })
-  @IsString()
+  @IsNumberString({}, { message: 'O valor informado deve ser um número.' })
   numero: string;
 
   @IsNotEmpty({ message: 'O bairro é obrigatório.' })
