@@ -1,0 +1,21 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "testRegex": "/e2e/.*\\.(e2e-test|e2e-spec).(ts|tsx|js)$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "moduleDirectories": ["<rootDir>/../", "node_modules"],
+  "coverageDirectory": "../coverage/e2e",
+  "collectCoverage": true,
+  "collectCoverageFrom": [
+    "**/*.(t|j)s",
+    "!main.ts",
+    "!**/*.module.ts",
+    "!**/*.spec.ts",
+    "!**/*.dto.ts",
+    "!**/*.mock.ts",
+    "!**/*.entity.ts",
+    "!**/dist/**",
+    "!**/coverage/**"
+  ]
+}

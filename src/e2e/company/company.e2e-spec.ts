@@ -3,12 +3,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { HttpCode, HttpStatus, INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { testTypeOrmModuleOptions } from 'test/test-orm';
 import { CompanyController } from 'src/company/company.controller';
 import { CompanyService } from 'src/company/company.service';
 import { Company } from 'src/company/entity/company.entity';
 import { mockCompany } from 'src/company/mock/company.mock';
 import { Address } from 'src/address/entity/adress.entity';
+import { testTypeOrmModuleOptions } from '../test-orm';
 
 describe('CompanyController (e2e)', () => {
   let app: INestApplication;

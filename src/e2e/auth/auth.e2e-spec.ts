@@ -9,8 +9,8 @@ import { HttpCode, HttpStatus, INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { User } from 'src/user/entity/user.entity';
 import { mockUser } from 'src/user/mock/user.mock';
-import { testTypeOrmModuleOptions } from 'test/test-orm';
 import { JWT_SECRET } from 'src/config/enviroment';
+import { testTypeOrmModuleOptions } from '../test-orm';
 
 describe('AuthController (e2e)', () => {
   let app: INestApplication;
@@ -40,12 +40,34 @@ describe('AuthController (e2e)', () => {
     await dataSource.getRepository(User).clear();
   });
 
-  it('/auth/login (POST)', async () => {
-    await dataSource.getRepository(User).save(mockUser);
-    return request(app.getHttpServer())
-      .post('/auth/login')
-      .send(mockUser)
-      .expect(HttpStatus.CREATED);
+  describe('/auth/login (POST)', () => {
+    it('should return a token for valid user', async () => {
+      await dataSource.getRepository(User).save(mockUser);
+
+      return request(app.getHttpServer())
+        .post('/auth/login')
+        .send(mockUser)
+        .expect(HttpStatus.CREATED)
+        .then((response) => {
+          expect(response.body).toHaveProperty('token');
+          expect(response.body.username).toBe(mockUser.username);
+        });
+    });
+
+    it('should return BadRequestException for not found user', async () => {
+      const invalidUser = {
+        username: 'invalidUsername',
+        password: 'wrongPassword',
+      };
+
+      return request(app.getHttpServer())
+        .post('/auth/login')
+        .send(invalidUser)
+        .expect(HttpStatus.BAD_REQUEST)
+        .then((response) => {
+          expect(response.body.message).toBe('User invalid!');
+        });
+    });
   });
 
   it('/auth/singup (POST)', async () => {

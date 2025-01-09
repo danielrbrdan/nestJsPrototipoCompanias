@@ -18,6 +18,7 @@ describe('BaseService', () => {
       findOne: jest.fn(),
       create: jest.fn(),
       save: jest.fn(),
+      merge: jest.fn(),
       update: jest.fn(),
       delete: jest.fn(),
     } as unknown as jest.Mocked<Repository<TestEntity>>;
@@ -63,11 +64,12 @@ describe('BaseService', () => {
   it('should call repository.update and return the updated entity', async () => {
     const mockEntity = { id: 1, name: 'Updated Entity' };
     repository.findOne.mockResolvedValue(mockEntity);
+    repository.save.mockResolvedValue(mockEntity);
 
     const result = await service.update(1, { name: 'Updated Entity' });
 
-    expect(repository.update).toHaveBeenCalledWith(1, {
-      name: 'Updated Entity',
+    expect(repository.save).toHaveBeenCalledWith({
+      ...mockEntity,
     });
     expect(repository.findOne).toHaveBeenCalledWith({
       where: { id: 1 },

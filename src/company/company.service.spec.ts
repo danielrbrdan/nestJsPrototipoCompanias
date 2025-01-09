@@ -14,6 +14,7 @@ describe('CompanyService', () => {
     find: jest.fn().mockResolvedValue([mockCompany]),
     findOne: jest.fn().mockResolvedValue(mockCompany),
     create: jest.fn().mockReturnValue(mockCompany),
+    merge: jest.fn(),
     save: jest.fn().mockResolvedValue(mockCompany),
     update: jest.fn().mockResolvedValue(mockCompany),
     delete: jest.fn().mockResolvedValue({ affected: 1 }),
@@ -86,11 +87,11 @@ describe('CompanyService', () => {
   describe('update', () => {
     it('should update a company and return the updated company', async () => {
       const id = 1;
-      await companyService.update(id, mockCompanyCreate);
-      expect(mockCompanyRepository.update).toHaveBeenCalledWith(
+      const result = await companyService.update(id, mockCompanyCreate);
+      expect(result).toEqual({
+        ...mockCompanyCreate,
         id,
-        mockCompanyCreate,
-      );
+      });
     });
   });
 
