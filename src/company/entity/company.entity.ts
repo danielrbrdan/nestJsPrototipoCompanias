@@ -18,18 +18,15 @@ export class Company {
   @Column()
   cnpj: string;
 
-  @OneToOne(() => Address, {
-    cascade: true,
-    onUpdate: 'CASCADE',
-    onDelete: 'CASCADE',
-    orphanedRowAction: 'delete',
-  })
-  @JoinColumn()
-  address: Address;
-
   @Column()
   phone: string;
 
   @Column()
   email: string;
+
+  @OneToOne(() => Address, (address) => address.company, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
+  address: Address;
 }

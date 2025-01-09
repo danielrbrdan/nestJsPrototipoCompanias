@@ -29,4 +29,10 @@ export class Address {
 
   @Column()
   zipCode: string;
+
+  @OneToOne(() => Company, (company) => company.address, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn()
+  company!: Company;
 }
