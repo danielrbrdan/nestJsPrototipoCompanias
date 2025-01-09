@@ -1,9 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CompanyController } from './company.controller';
 import { CompanyService } from './company.service';
-import { Company } from './entity/company.entity';
-import { CompanyCreateDto } from './dto/company-create.dto';
-import { CompanyUpdateDto } from './dto/company-update.dto';
 import {
   mockCompany,
   mockCompanyCreate,
