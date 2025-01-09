@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Company } from 'src/company/entity/company.entity';
+import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, OneToOne } from 'typeorm';
 
 @Entity()
 export class Address {
@@ -6,20 +7,20 @@ export class Address {
   id: number;
 
   @Column()
-  logradouro: string;
+  street: string;
 
   @Column()
   numero: string;
 
   @Column()
-  bairro: string;
+  neighborhood: string;
 
   @Column()
-  cidade: string;
+  city: string;
 
   @Column()
-  estado: string;
+  state: string;
 
   @Column()
-  cep: string;
+  zipCode: string;
 }

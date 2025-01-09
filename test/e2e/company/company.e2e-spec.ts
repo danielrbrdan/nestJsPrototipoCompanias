@@ -42,13 +42,13 @@ describe('CompanyController (e2e)', () => {
       .then(async (response) => {
         const created = await dataSource.getRepository(Company).findOne({
           where: { id: response.body.id },
-          relations: ['endereco'],
+          relations: ['address'],
         });
 
         expect(created).toEqual({
           ...mockCompany,
           id: expect.any(Number),
-          endereco: { ...mockCompany.endereco, id: expect.any(Number) },
+          address: { ...mockCompany.address, id: expect.any(Number) },
         });
       });
   });
@@ -82,7 +82,7 @@ describe('CompanyController (e2e)', () => {
       .save(mockCompany);
     const updatedCompany = {
       ...mockCompany,
-      nome: 'Updated Company',
+      name: 'Updated Company',
     };
 
     return request(app.getHttpServer())

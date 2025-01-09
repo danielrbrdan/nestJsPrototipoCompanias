@@ -59,7 +59,7 @@ describe('CompanyService', () => {
       expect(result).toEqual(mockCompany);
       expect(mockCompanyRepository.findOne).toHaveBeenCalledWith({
         where: { id },
-        relations: ['endereco'],
+        relations: ['address'],
       });
     });
 

@@ -13,6 +13,6 @@ export class CompanyService extends BaseService<Company> {
     protected repository: Repository<Company>,
   ) {
     super(repository);
-    this.findOneRelations = ['endereco'] as FindOptionsRelations<Company>;
+    this.findOneRelations = ['address'] as FindOptionsRelations<Company>;
   }
 }
