@@ -8,7 +8,7 @@ export class AddressCreateDto {
 
   @IsNotEmpty({ message: 'O número é obrigatório.' })
   @IsNumberString({}, { message: 'O valor informado deve ser um número.' })
-  numero: string;
+  number: string;
 
   @IsNotEmpty({ message: 'O bairro é obrigatório.' })
   @IsString()

@@ -8,7 +8,7 @@ export const mockAddress: Address = {
   city: 'city',
   state: 'state',
   street: 'Rua tal',
-  numero: '12',
+  number: '12',
 } as Address;
 
 export const mockAddressCreate: AddressCreateDto = {
