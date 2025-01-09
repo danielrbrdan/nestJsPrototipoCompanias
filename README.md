@@ -2,7 +2,7 @@
 
 ## Descrição
 
-Este backend foi desenvolvido em NestJS, utilizando o TypeORM para a manipulação de dados em bancos de dados MySQL ou MariaDB. O sistema oferece uma API RESTful para o gerenciamento de empresas, permitindo a realização de operações de criação, leitura, atualização e exclusão (CRUD).
+Este backend foi desenvolvido em NestJS, utilizando o TypeORM para a manipulação de dados em bancos de dados MySQL. O sistema oferece uma API RESTful para o gerenciamento de empresas, permitindo a realização de operações de criação, leitura, atualização e exclusão (CRUD).
 Além disso, o sistema inclui autenticação segura com o serviço JWT do NestJS e hashing de senhas utilizando o Bcrypt, garantindo maior proteção às informações sensíveis.
 
 ## Rotas
