@@ -24,10 +24,7 @@ describe('AuthGuard', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        AuthGuard,
-        { provide: JwtService, useValue: mockJwtService },
-      ],
+      providers: [AuthGuard, { provide: JwtService, useValue: mockJwtService }],
     }).compile();
 
     authGuard = module.get<AuthGuard>(AuthGuard);
@@ -45,7 +42,9 @@ describe('AuthGuard', () => {
         url: '/auth/login',
       });
 
-      const result = await authGuard.canActivate(mockExecutionContext as unknown as ExecutionContext);
+      const result = await authGuard.canActivate(
+        mockExecutionContext as unknown as ExecutionContext,
+      );
       expect(result).toBe(true);
     });
 
@@ -55,7 +54,9 @@ describe('AuthGuard', () => {
         url: '/some/other/route',
       });
 
-      const result = await authGuard.canActivate(mockExecutionContext as unknown as ExecutionContext);
+      const result = await authGuard.canActivate(
+        mockExecutionContext as unknown as ExecutionContext,
+      );
       expect(result).toBe(true);
     });
 
@@ -65,9 +66,11 @@ describe('AuthGuard', () => {
         url: '/some/other/route',
       });
 
-      await expect(authGuard.canActivate(mockExecutionContext as unknown as ExecutionContext))
-        .rejects
-        .toThrow(UnauthorizedException);
+      await expect(
+        authGuard.canActivate(
+          mockExecutionContext as unknown as ExecutionContext,
+        ),
+      ).rejects.toThrow(UnauthorizedException);
     });
 
     it('should throw UnauthorizedException if token is invalid', async () => {
@@ -76,11 +79,15 @@ describe('AuthGuard', () => {
         url: '/some/other/route',
       });
 
-      (mockJwtService.verifyAsync as jest.Mock).mockRejectedValueOnce(new Error('Invalid token'));
+      (mockJwtService.verifyAsync as jest.Mock).mockRejectedValueOnce(
+        new Error('Invalid token'),
+      );
 
-      await expect(authGuard.canActivate(mockExecutionContext as unknown as ExecutionContext))
-        .rejects
-        .toThrow(UnauthorizedException);
+      await expect(
+        authGuard.canActivate(
+          mockExecutionContext as unknown as ExecutionContext,
+        ),
+      ).rejects.toThrow(UnauthorizedException);
     });
   });
 });

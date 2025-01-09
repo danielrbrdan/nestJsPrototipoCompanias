@@ -10,7 +10,7 @@ services:
     env_file:
       - .env
     volumes:
-        - ./src:/usr/src/app/src
+      - ./src:/usr/src/app/src
     depends_on:
       - mysql
 

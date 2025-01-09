@@ -1,7 +1,7 @@
-import { User } from "../entity/user.entity";
+import { User } from '../entity/user.entity';
 
 export const mockUser: User = {
-    id: 1,
-    password: 'password',
-    username: 'username'
-}
+  id: 1,
+  password: 'password',
+  username: 'username',
+};

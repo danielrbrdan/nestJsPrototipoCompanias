@@ -1,5 +1,11 @@
 import { Transform, Type } from 'class-transformer';
-import { IsString, IsNotEmpty, IsEmail, Matches, ValidateNested } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsEmail,
+  Matches,
+  ValidateNested,
+} from 'class-validator';
 import { AddressCreateDto } from 'src/address/dto/address-create.dto';
 import { cnpjRegex, phoneRegex } from 'src/utils/variables/common-variables';
 

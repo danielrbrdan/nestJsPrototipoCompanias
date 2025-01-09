@@ -1,14 +1,13 @@
-
   <p align="center">Sistema de cadastro de Companias</p>
 
 ## Description
 
 Este é um backend desenvolvido em NestJS, utilizando TypeORM para manipulação de dados no banco de dados MySQL (ou MariaDB). O sistema fornece uma API RESTful para gerenciar empresas, com operações de criação, leitura, atualização e exclusão (CRUD).
 
-
 ## Rotas
 
 ### Endpoints RESTful:
+
 - POST /auth/login: Gerar token para acesso ao sistema.
 - POST /auth/singup: Cadastrar novo usuario no sistema.
 - GET /companies: Lista todas as empresas.
@@ -30,9 +29,11 @@ Este é um backend desenvolvido em NestJS, utilizando TypeORM para manipulação
 
 Certifique-se de ter o Docker e o Docker Compose instalados.
 No diretório do projeto, execute:
+
 ```bash
 docker-compose up --build
 ```
+
 Acesse a API em http://localhost:3000.
 
 ## Deployment (LOCAL sem DOCKER)
@@ -54,15 +55,19 @@ Instale as dependências e inicie o sistema:
 npm install
 npm run start:dev
 ```
+
 Acesse a API em http://localhost:3000.
 
 ## Testes
+
 ### Testes unitários:
+
 ```bash
 npm run test
 ```
 
 ### Testes E2E:
+
 ```bash
 npm run test:e2e
 ```
