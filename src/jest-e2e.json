@@ -12,6 +12,7 @@
     "!main.ts",
     "!**/*.module.ts",
     "!**/*.spec.ts",
+    "!**/*.e2e-spec.ts",
     "!**/*.dto.ts",
     "!**/*.mock.ts",
     "!**/*.entity.ts",
