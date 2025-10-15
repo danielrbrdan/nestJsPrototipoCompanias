@@ -5,17 +5,21 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: nestjs_api
     ports:
       - '3000:3000'
     env_file:
       - .env
     volumes:
-      - ./src:/usr/src/app/src
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
     depends_on:
       - mysql
+    command: npm run start:dev
 
   mysql:
     image: mysql:8
+    container_name: mysql_db
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
